@@ -1,58 +1,86 @@
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Box, Grid, Typography, Skeleton, Button, Rating, Paper } from '@mui/material';
 import useFetch from '../../hooks/useFetch';
 import { useParams } from 'react-router-dom';
-import React from 'react';
+
 function BookDetails() {
-
     const { bookId } = useParams();
+    const { data } = useFetch(`https://epibooks.onrender.com/${bookId}`);
+    const [loading, setLoading] = useState(true);
 
-    const { data } = useFetch(`https://epibooks.onrender.com/${bookId}`)
-    
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 750);
+    }, []);
+
+    const bookDescription = `This book captures the essence of the human spirit, its challenges, and its triumphs. Journey through the pages as the narrative unfolds, exploring themes that resonate across generations. Dive deeper into the minds of characters, explore vivid landscapes, and immerse yourself in a story that is both timeless and relevant.
+
+    Author John Doe masterfully weaves a tale of adventure, mystery, and self-discovery. Each chapter draws you in, making it impossible to put the book down. Whether you're a long-time fan of the genre or a newcomer, this book promises an experience that will stay with you long after you've turned the last page.`;
+
     return (
-    <>
-            {data && (<section className="py-5">
-            <Container>
-                <Row className="gx-5">
-                    <Col lg={6}>
-                        <div className="rounded-4 mb-3 d-flex justify-content-center">
-                            <Image src={data[0].img} style={{maxWidth: '100%', maxHeight: '50vh'}} rounded className="product-image" />
-                        </div>
-                        <div className="d-flex justify-content-center mb-3">
-                            {[...Array(5)].map((_, i) => (
-                                <span key={i} className="border mx-1 rounded-4 opacity-75">
-                                    <Image src={data[0].img} style={{maxWidth: '100%'}} rounded className="product-image" />
-                                </span>
-                            ))}
-                        </div>
-                    </Col>
-                    <Col lg={6} className="mt-5">
-                        <div className="ps-lg-3">
-                            <h4 className="title display-6">
-                                Behind every book, there's an untold narrative waiting to be unveiled.
-                            </h4>
-                            <div className="d-flex flex-row my-3">
-                                <div className="text-warning mb-1 me-2">
-                                    <span className="ms-1">4.5</span>
-                                </div>
-                                <span><i className="fas fa-shopping-basket fa-sm mx-1"></i>154 orders</span>
-                                <span className="text-success ms-2">In stock</span>
-                            </div>
-                            <div className="mb-3">
-                                    <span className="h5" id="product-price">{data[0].price}$</span>
-                                <span>/book</span>
-                            </div>
-                            <p>
-                                <span className="fw-bold display-3" id="product-brand"></span>{data[0].title}
-                            </p>
-                                <p>Category: <span className="text-danger" id="product-description">
-                                {data[0].category}
-                                </span></p>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
-            </section>)}
-            </>
+        <Box py={5} display="flex" justifyContent="center">
+            <Paper elevation={3} style={{ width: '90%', maxWidth: '1200px', padding: '24px' }}>
+                {!loading && data ? (
+                    <Grid container spacing={5}>
+                        <Grid item xs={12} md={6}>
+                            <Box mb={3} borderRadius="8px" overflow="hidden">
+                                <img src={data[0].img} alt={data[0].title} style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }} />
+                            </Box>
+                            <Grid container spacing={2}>
+                                {[...Array(3)].map((_, index) => (
+                                    <Grid item xs={4} key={index}>
+                                        <img src={data[0].img} alt={`${data[0].title}-${index}`} style={{ width: '100%', opacity: '0.6', borderRadius: '8px', objectFit: 'cover' }} />
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Typography variant="h4" gutterBottom>
+                                {data[0].title}
+                            </Typography>
+                            <Box my={2} display="flex" alignItems="center">
+                                <Rating name="rating" value={4.5} readOnly />
+                                <Typography variant="body2" color="textSecondary" style={{ marginLeft: '8px' }}>
+                                    154 orders
+                                </Typography>
+                            </Box>
+                            <Typography variant="h5" color="textPrimary" gutterBottom>
+                                ${data[0].price}
+                            </Typography>
+                            <Typography paragraph>
+                                Category: <strong>{data[0].category}</strong>
+                            </Typography>
+                            <Typography paragraph>
+                                {bookDescription}
+                            </Typography>
+                            <Button variant="contained" color="primary" size="large" style={{ marginTop: '16px' }}>
+                                Add to Cart
+                            </Button>
+                        </Grid>
+                    </Grid>
+                ) : (
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={6}>
+                            <Skeleton variant="rectangular" width="100%" height="400px" />
+                            <Box mt={3}>
+                                {[...Array(3)].map((_, index) => (
+                                    <Grid item xs={4} key={index}>
+                                        <Skeleton variant="rectangular" width="100%" height="100px" />
+                                    </Grid>
+                                ))}
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Skeleton variant="text" width="70%" height="40px" />
+                            <Skeleton variant="text" width="40%" height="30px" />
+                            <Skeleton variant="text" width="30%" />
+                            <Skeleton variant="text" width="90%" height="40px" />
+                        </Grid>
+                    </Grid>
+                )}
+            </Paper>
+        </Box>
     );
 }
 

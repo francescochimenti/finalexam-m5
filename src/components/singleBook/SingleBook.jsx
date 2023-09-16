@@ -13,26 +13,35 @@ const SingleBook = ({ book }) => {
         <CardActionArea>
           <CardMedia
             component="img"
-            sx={{ height: 500 }}
+            sx={{ height: 320 }}
             image={book.img}
             alt={book.title}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="div"
+              sx
+              ={{
+                display: "-webkit-box",
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden"
+          
+              }}
+            >
               {book.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {book.category}
+              Category: {book.category.toUpperCase()}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {book.price}
+              Price: {book.price}$
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
           <Link to={`/details/${book.asin}`}>
             <Button size="medium" color="primary">
-              Dettagli
+              Details
           </Button>
           </Link>
         </CardActions>
