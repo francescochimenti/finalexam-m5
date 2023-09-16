@@ -1,0 +1,137 @@
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  flex: 1;
+}
+
+.logo img {
+  width: 50px;
+  margin-left: 20px;
+}
+
+.input {
+  flex: 2;
+  margin: 0 1rem;
+}
+
+input {
+  width: 120px;
+  height: 52px;
+  max-width: 400px;
+  padding: 12px;
+  border: none;
+  box-shadow: 0 0 6px rgb(0, 0, 0, 0.2);
+  border-radius: 6px;
+  font-size: 20px;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 4px;
+  border: 1px solid;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.hamburger.open div:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open div:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open div:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: -10000px;
+  width: 60%;
+  height: 100vh;
+  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s;
+  z-index: 999; /* Ensure the menu is below the hamburger but above everything else */
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hamburger.open ~ .menu {
+  right: 0;
+}
+
+/* Media Query for responsiveness */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+}
+
+  .box {
+    background-color: #cd0303;
+    color: white;
+    padding: 12px;
+    width: 60px;
+    margin-left: 10px;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    border-radius: 10px;
+  }
+  
+  .box  option {
+    padding: 30px;
+  }
+  
+  /* Media Query per desktop */
+@media (min-width: 769px) {
+  .menu {
+    position: static;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu ul {
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  input{
+    width: 200px;
+  }
+  
+  .box{
+    width: 120px;
+  }
+}
