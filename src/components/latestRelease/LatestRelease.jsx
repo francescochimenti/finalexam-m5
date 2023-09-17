@@ -50,7 +50,7 @@ function LatestRelease() {
       <>
         <Container>
           <h1 className="display-1 text-center mt-4 fw-bold">Book's Shop</h1>
-          <Row>
+          <Row className="h-100">
             <Col lg={8}>
               <Row>
                 {books.map((book) => (
@@ -69,16 +69,18 @@ function LatestRelease() {
                         setSelectedBookId(book.asin);
                       }
                     }}
-                    
                   >
                     <SingleBook book={book} />
                   </Col>
                 ))}
               </Row>
             </Col>
-            <Col lg={4} m-0 p-0>
-            <CommentArea selectedBookId={selectedBookId} />
-            </Col>
+            <Col lg={4}>
+    <div className="comment-sticky-top">
+        <CommentArea selectedBookId={selectedBookId} />
+    </div>
+</Col>
+
           </Row>
         </Container>
       </>

@@ -83,7 +83,9 @@ const MyNavbar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }}
+    className="sticky-top"
+    >
       <AppBar
         position="static"
         color="default"
