@@ -8,7 +8,7 @@ import Skeleton from "@mui/material/Skeleton";
 import CommentArea from "../commentArea/CommentArea";
 
 function LatestRelease() {
-  const books = useSelector((state) => state.books.displayAllBooks.slice(0,12));
+  const books = useSelector((state) => state.books.displayAllBooks);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function LatestRelease() {
               </Row>
             </Col>
             <Col lg={4} m-0 p-0>
-            <CommentArea/>
+              <CommentArea />
             </Col>
           </Row>
         </Container>

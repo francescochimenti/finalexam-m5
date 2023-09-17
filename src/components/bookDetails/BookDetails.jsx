@@ -15,7 +15,7 @@ function BookDetails() {
     }, []);
 
     const bookDescription = `This book captures the essence of the human spirit, its challenges, and its triumphs. Journey through the pages as the narrative unfolds, exploring themes that resonate across generations. Dive deeper into the minds of characters, explore vivid landscapes, and immerse yourself in a story that is both timeless and relevant.
-
+    
     Author John Doe masterfully weaves a tale of adventure, mystery, and self-discovery. Each chapter draws you in, making it impossible to put the book down. Whether you're a long-time fan of the genre or a newcomer, this book promises an experience that will stay with you long after you've turned the last page.`;
 
     return (
