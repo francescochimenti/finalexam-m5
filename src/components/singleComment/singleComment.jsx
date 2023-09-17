@@ -1,8 +1,8 @@
 import { Typography, Card, CardContent, Avatar } from "@mui/material";
 import useFetch from "../../hooks/useFetch";
 
-function SingleComment() {
-  const { data } = useFetch("https://striveschool-api.herokuapp.com/api/comments/");
+function SingleComment({selectedBookId}) {
+  const { data } = useFetch(`https://epibooks.onrender.com/${selectedBookId}`);
 
   if (!data) return <div>Loading...</div>;
 
@@ -10,6 +10,7 @@ function SingleComment() {
     <>
       {data.map((comment) => (
         <Card
+          key={comment.asin}
           variant="elevation"
           style={{
             marginBottom: "20px",
@@ -20,7 +21,7 @@ function SingleComment() {
         >
           <div style={{ padding: "10px 20px" }}>
             <Typography variant="h6" style={{ fontWeight: "bold" }}>
-              Voto: {comment.comment} / 5
+              Voto: {comment.price} / 5
             </Typography>
           </div>
   
@@ -42,7 +43,7 @@ function SingleComment() {
                 Commento:
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                {comment.rate}
+                {comment.asin}
               </Typography>
             </div>
           </CardContent>

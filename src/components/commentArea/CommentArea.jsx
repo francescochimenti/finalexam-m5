@@ -1,11 +1,11 @@
 import SingleComment from '../singleComment/singleComment';
 import AddComment from '../addComment/AddComment'
 
-function CommentArea() {
+function CommentArea({selectedBookId}) {
   return (
     <div>
-      <AddComment/>
-        <SingleComment/>
+      <AddComment />
+      <SingleComment selectedBookId={selectedBookId} />
     </div>
   );
 }

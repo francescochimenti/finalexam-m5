@@ -10,6 +10,7 @@ import CommentArea from "../commentArea/CommentArea";
 function LatestRelease() {
   const books = useSelector((state) => state.books.displayAllBooks);
   const [loading, setLoading] = useState(false);
+  const [selectedBookId, setSelectedBookId] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -29,10 +30,14 @@ function LatestRelease() {
             key={nanoid()}
             className="d-flex justify-content-center mt-4"
           >
-            <div style={{ width: '80%', margin: '0 auto' }}>
+            <div style={{ width: "80%", margin: "0 auto" }}>
               <Skeleton variant="rectangular" height={250} />
-              <Skeleton variant="text" style={{ marginTop: '10px' }} />
-              <Skeleton variant="text" width="80%" style={{ marginTop: '10px' }} />
+              <Skeleton variant="text" style={{ marginTop: "10px" }} />
+              <Skeleton
+                variant="text"
+                width="80%"
+                style={{ marginTop: "10px" }}
+              />
             </div>
           </Col>
         ))}
@@ -53,8 +58,18 @@ function LatestRelease() {
                     xs={12}
                     md={6}
                     lg={4}
-                    key={nanoid()}
-                    className="d-flex justify-content-center mt-4"
+                    key={book.asin}
+                    className={`d-flex justify-content-center mt-4 ${
+                      book.asin === selectedBookId ? "selected-book" : ""
+                    }`}
+                    onClick={() => {
+                      if (selectedBookId === book.asin) {
+                        setSelectedBookId(null);
+                      } else {
+                        setSelectedBookId(book.asin);
+                      }
+                    }}
+                    
                   >
                     <SingleBook book={book} />
                   </Col>
@@ -62,7 +77,7 @@ function LatestRelease() {
               </Row>
             </Col>
             <Col lg={4} m-0 p-0>
-              <CommentArea />
+            <CommentArea selectedBookId={selectedBookId} />
             </Col>
           </Row>
         </Container>
@@ -75,9 +90,7 @@ function LatestRelease() {
           <h1 className="display-1 text-center mt-4 fw-bold">Book's Shop</h1>
           <Row>
             <Col lg={8}>
-              <Row>
-                {renderSkeletons()}
-              </Row>
+              <Row>{renderSkeletons()}</Row>
             </Col>
             <Col lg={4} m-0 p-0>
               <div>
