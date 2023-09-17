@@ -5,13 +5,11 @@ import SingleBook from "../singleBook/SingleBook";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import Skeleton from "@mui/material/Skeleton";
-import Pagination from "@mui/material/Pagination";
+import CommentArea from "../commentArea/CommentArea";
 
 function LatestRelease() {
-  const books = useSelector((state) => state.books.displayAllBooks);
+  const books = useSelector((state) => state.books.displayAllBooks.slice(0,12));
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 12;
 
   useEffect(() => {
     setLoading(true);
@@ -19,14 +17,6 @@ function LatestRelease() {
       setLoading(false);
     }, 750);
   }, []);
-
-  const indexOfLastBook = currentPage * booksPerPage;
-  const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
-
-  const handlePaginationChange = (event, value) => {
-    setCurrentPage(value);
-  };
 
   const renderSkeletons = () => {
     return (
@@ -58,7 +48,7 @@ function LatestRelease() {
           <Row>
             <Col lg={8}>
               <Row>
-                {currentBooks.map((book) => (
+                {books.map((book) => (
                   <Col
                     xs={12}
                     md={6}
@@ -70,20 +60,9 @@ function LatestRelease() {
                   </Col>
                 ))}
               </Row>
-              <div className="d-flex justify-content-center mt-4">
-                <Pagination
-                  count={Math.ceil(books.length / booksPerPage)}
-                  page={currentPage}
-                  onChange={handlePaginationChange}
-                />
-              </div>
             </Col>
             <Col lg={4} m-0 p-0>
-              <div>
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quibusdam asperiores pariatur iure aspernatur vel neque, minus, nisi officiis accusantium laborum aperiam officia consequuntur ducimus dolor quia minima labore expedita et nobis perspiciatis. Officia fuga ratione vero animi quia et voluptate vitae nesciunt, eveniet modi earum magnam facere ducimus expedita repudiandae?
-                </p>
-              </div>
+            <CommentArea/>
             </Col>
           </Row>
         </Container>

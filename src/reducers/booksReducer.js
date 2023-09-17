@@ -23,7 +23,7 @@ const booksSlice = createSlice({
   reducers: {
     setCategory: (state, action) => {
       state.setCategory = action.payload;
-      state.displayAllBooks = state.books[action.payload];
+      state.displayAllBooks = state.books[action.payload]
     },
     setSearch: (state, action) => {
       state.displayAllBooks = state.books[state.setCategory].filter((book) =>
