@@ -65,8 +65,9 @@ return (
             style={{ display: "flex", alignItems: "start", padding: "20px" }}
           >
             <Avatar
-              src="https://koolinus.net/blog/wp-content/uploads/2019/03/avataaars-%E2%80%93-koolinus-1-12mar2019.png"
-              alt="koolinus avatar"
+              src={`https://i.pravatar.cc/150?img=${
+                Math.floor(Math.random() * 50)}
+              `}
               style={{ width: "60px", height: "60px", marginRight: "20px" }}
             />
 
