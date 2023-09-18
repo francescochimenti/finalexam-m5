@@ -1,16 +1,24 @@
 import { Col, Container, Row } from "react-bootstrap";
 import "../latestRelease/latestRelease.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SingleBook from "../singleBook/SingleBook";
-import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
-import Skeleton from "@mui/material/Skeleton";
 import CommentArea from "../commentArea/CommentArea";
+import { BarLoader } from "react-spinners";
+import { setId } from "../../reducers/idTaker";
 
 function LatestRelease() {
-  const books = useSelector((state) => state.books.displayAllBooks);
+  const books = useSelector((state) => state.books.displayAllBooks.slice(0, 9));
   const [loading, setLoading] = useState(false);
-  const [selectedBookId, setSelectedBookId] = useState(null);
+
+  const currentId = useSelector((state) => state.idTaker.id);
+
+  const dispatch = useDispatch();
+
+  const myIdSet = (id) => {
+    dispatch(setId(id));
+  };
+  
 
   useEffect(() => {
     setLoading(true);
@@ -19,31 +27,6 @@ function LatestRelease() {
     }, 750);
   }, []);
 
-  const renderSkeletons = () => {
-    return (
-      <>
-        {Array.from({ length: books.length }).map(() => (
-          <Col
-            xs={12}
-            md={6}
-            lg={4}
-            key={nanoid()}
-            className="d-flex justify-content-center mt-4"
-          >
-            <div style={{ width: "80%", margin: "0 auto" }}>
-              <Skeleton variant="rectangular" height={250} />
-              <Skeleton variant="text" style={{ marginTop: "10px" }} />
-              <Skeleton
-                variant="text"
-                width="80%"
-                style={{ marginTop: "10px" }}
-              />
-            </div>
-          </Col>
-        ))}
-      </>
-    );
-  };
 
   if (!loading) {
     return (
@@ -60,13 +43,13 @@ function LatestRelease() {
                     lg={4}
                     key={book.asin}
                     className={`d-flex justify-content-center mt-4 ${
-                      book.asin === selectedBookId ? "selected-book" : ""
+                      book.asin === currentId ? "selected-book" : ""
                     }`}
                     onClick={() => {
-                      if (selectedBookId === book.asin) {
-                        setSelectedBookId(null);
+                      if (currentId === book.asin) {
+                        myIdSet(null);
                       } else {
-                        setSelectedBookId(book.asin);
+                        myIdSet(book.asin);
                       }
                     }}
                   >
@@ -77,7 +60,7 @@ function LatestRelease() {
             </Col>
             <Col lg={4}>
     <div className="comment-sticky-top">
-        <CommentArea selectedBookId={selectedBookId} />
+        <CommentArea />
     </div>
 </Col>
 
@@ -91,13 +74,10 @@ function LatestRelease() {
         <Container>
           <h1 className="display-1 text-center mt-4 fw-bold">Book's Shop</h1>
           <Row>
-            <Col lg={8}>
-              <Row>{renderSkeletons()}</Row>
-            </Col>
-            <Col lg={4} m-0 p-0>
-              <div>
-                <Skeleton variant="text" height={300} />
-              </div>
+            <Col className="d-flex justify-content-center align-items-center">
+              <Row>
+              <BarLoader color="#36d7b7" />
+              </Row>
             </Col>
           </Row>
         </Container>

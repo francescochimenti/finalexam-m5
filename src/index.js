@@ -9,14 +9,14 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import booksReducer from "./reducers/booksReducer";
 import themeReducer from "./reducers/themeReducer"
-import commentReducer from "./reducers/commentReducer";
+import idTaker from "./reducers/idTaker";
 
 import ThemeWrapper from "./components/themeWrapper/ThemeWrapper"
 
 const reducer = combineReducers({
   books: booksReducer,
   theme: themeReducer,
-  comment: commentReducer,
+  idTaker: idTaker,
 });
 
 const store = configureStore({
