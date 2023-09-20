@@ -1,46 +1,34 @@
 import { Typography, Card, CardContent, Avatar } from "@mui/material";
-import axios from "axios";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import useComment from "../../hooks/useComment";
 
 function SingleComment() {
 
-  const currentID = useSelector((state) => state.idTaker.id);
+  const { data } = useComment();
   
-  const URL = `https://striveschool-api.herokuapp.com/api/comments/${currentID}`;
-  const TOKEN =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZiOTgyYzMyYWYyNzAwMTQ5ODYxMTQiLCJpYXQiOjE2OTQyMTAwOTIsImV4cCI6MTY5NTQxOTY5Mn0.FiyvuJpyWQ2fPmBNRuOZwJW73vb7Pa3PASf3iDOiiVo";
+ 
   
   const [comments, setComments] = useState([]);
-
-  const getComment = async () => {
-    try {
-      const response = await axios.get(URL, {
-        headers: {
-          Authorization: TOKEN,
-        },
-      });
-      setComments(response.data);
   console.log(comments);
 
-
-    } catch (error) {
-      console.log("Error:", error);
-    }
-  };
-
+  
+  
   useEffect(() => {
-    setComments([]);
-
-    getComment();
-}, [currentID]);
+    if (data) {
+      setComments(data);
+  console.log(comments);
+    } else {
+      setComments([]);
+    }
+  }, [data]);
+  
 
 
 return (
   <>
     {comments.length === 0 ? (
-       <Typography variant="h5" style={{ color: '#888' }}>
+       <Typography variant="h5" sx={{ textAlign: 'center' }}>
        Nessun commento
      </Typography>
     ) : (
