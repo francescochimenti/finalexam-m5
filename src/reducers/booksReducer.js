@@ -18,25 +18,6 @@ const initialState = {
   setSearch: "",
 };
 
-/* ! 
-
-in pratica redux ragiona cosi
-
-const redux = {
-  a: "quanteOrePerse"
-};
-
-const b = "a";
-
-console.log(redux[b]);
-
-è come se facessi redux.reduxInfame in pratica, però gli passo la key, di cosegnuenza
-
-per cambiare categoria
-
-state.displayAllBooks = state.books[action.payload] sarebbe state.books.categoria scelta
-*/
-
 const booksSlice = createSlice({
   name: "books",
   initialState: initialState,

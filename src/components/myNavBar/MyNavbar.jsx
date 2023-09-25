@@ -5,6 +5,7 @@ import { toggleTheme } from "../../reducers/themeReducer";
 import {
   AppBar,
   Box,
+  Button,
   Toolbar,
   IconButton,
   Typography,
@@ -24,7 +25,7 @@ const MyNavbar = () => {
   const dispatch = useDispatch();
   const themeMode = useSelector((state) => state.theme);
   const currentCategory = useSelector((state) => state.books.setCategory);
-  const location = useLocation(); 
+  const location = useLocation();
 
   const setSearchInput = (event) => {
     dispatch(setSearch(event.target.value));
@@ -47,9 +48,16 @@ const MyNavbar = () => {
       >
         <Toolbar>
           <Grid container alignItems="center">
-            <Grid item xs={1} sm={1} md={1}>
-              <IconButton color="inherit" onClick={() => dispatch(toggleTheme())}>
-                {themeMode === "light" ? <Brightness4Icon /> : <Brightness7Icon />}
+            <Grid item xs={2} sm={1} md={1}>
+              <IconButton
+                color="inherit"
+                onClick={() => dispatch(toggleTheme())}
+              >
+                {themeMode === "light" ? (
+                  <Brightness4Icon />
+                ) : (
+                  <Brightness7Icon />
+                )}
               </IconButton>
             </Grid>
             <Grid item xs={5} sm={3} md={3}>
@@ -57,12 +65,12 @@ const MyNavbar = () => {
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ flexGrow: 1, textAlign: "left" }}
+                sx={{ flexGrow: 1, textAlign: "left"}}
               >
                 epibooks
               </Typography>
             </Grid>
-            
+
             {isHome ? (
               <>
                 <Grid item xs={6} sm={3} md={2}>
@@ -91,9 +99,9 @@ const MyNavbar = () => {
                 </Grid>
               </>
             ) : (
-                <Typography variant="h6" gutterBottom>
+              <Button variant="outlined"> 
                 <Link to={"/"}>Back to the Homepage</Link>
-              </Typography>
+              </Button>
             )}
           </Grid>
         </Toolbar>
