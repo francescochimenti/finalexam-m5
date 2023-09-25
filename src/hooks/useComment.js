@@ -6,7 +6,7 @@ const useComment = () => {
 
     const URL = `https://striveschool-api.herokuapp.com/api/comments/${currentID}`;
     const TOKEN =
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZiOTgyYzMyYWYyNzAwMTQ5ODYxMTQiLCJpYXQiOjE2OTQyMTAwOTIsImV4cCI6MTY5NTQxOTY5Mn0.FiyvuJpyWQ2fPmBNRuOZwJW73vb7Pa3PASf3iDOiiVo";
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTExY2ZlN2IyYjJhZTAwMTRiMzQ3MDUiLCJpYXQiOjE2OTU2NjYxNTEsImV4cCI6MTY5Njg3NTc1MX0.y5zScLJr8heKFZpCzn0OB8IJWTE8spbQY-InnwUnM64";
 
     const [data, setData] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +31,7 @@ const useComment = () => {
     useEffect(() => {
         getData()
         // eslint-disable-next-line 
-    }, [URL]);
+    }, [URL, currentID]);
 
     return { data, isLoading, error }
 }

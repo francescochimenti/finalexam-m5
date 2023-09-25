@@ -8,7 +8,7 @@ import { BarLoader } from "react-spinners";
 import { setId } from "../../reducers/idTaker";
 
 function LatestRelease() {
-  const books = useSelector((state) => state.books.displayAllBooks.slice(0, 9));
+  const books = useSelector((state) => state.books.displayAllBooks.slice(0, 20));
   const [loading, setLoading] = useState(false);
 
   const currentId = useSelector((state) => state.idTaker.id);

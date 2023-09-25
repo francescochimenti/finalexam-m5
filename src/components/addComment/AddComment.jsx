@@ -10,9 +10,9 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {setId} from "../../reducers/idTaker";
+import { setId } from "../../reducers/idTaker";
 
-function AddComment() {
+const AddComment = () => {
 
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ function AddComment() {
   
   const URL = `https://striveschool-api.herokuapp.com/api/comments/`;
   const TOKEN =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZiOTgyYzMyYWYyNzAwMTQ5ODYxMTQiLCJpYXQiOjE2OTQyMTAwOTIsImV4cCI6MTY5NTQxOTY5Mn0.FiyvuJpyWQ2fPmBNRuOZwJW73vb7Pa3PASf3iDOiiVo";
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTExY2ZlN2IyYjJhZTAwMTRiMzQ3MDUiLCJpYXQiOjE2OTU2NjYxNTEsImV4cCI6MTY5Njg3NTc1MX0.y5zScLJr8heKFZpCzn0OB8IJWTE8spbQY-InnwUnM64";
   
   const postComment = async () => {
     try {
@@ -44,12 +44,15 @@ function AddComment() {
         );
         console.log(response);
         
-        if(response.status === 200) {
-          alert("Commento aggiunto correttamente")
-          setComment("")
-          setRate("")
-          dispatch(setId(""))
-      }
+        if (response.status === 200) {
+          setComment("");
+          setRate("");
+          dispatch(setId(""));
+          setTimeout(() => {
+            dispatch(setId(currentId));
+          }, 100);
+        }
+        
 
     } catch (error) {
       console.log(error);
@@ -73,7 +76,7 @@ function AddComment() {
           value={rate}
         >
           {[1, 2, 3, 4, 5].map((num) => (
-            <MenuItem value={num}
+            <MenuItem value={num} key={num}
             >
               {num}
             </MenuItem>
