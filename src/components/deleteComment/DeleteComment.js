@@ -27,9 +27,9 @@ const DeleteComment = ({ id }) => {
       });
 
       if (response.status === 200) {
-        dispatch(setId(""));
+        dispatch(setId("")); // i need this to re-render the component
         setTimeout(() => {
-          dispatch(setId(currentId));
+          dispatch(setId(currentId)); //now the component is re-rendered and showing the updated comments
         }, 100);
       } else {
         alert("Errore durante l'eliminazione del commento.");

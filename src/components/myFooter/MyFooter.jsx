@@ -6,7 +6,7 @@ function MyFooter() {
       <Box mt={5} mb={2}>
     <Container maxWidth="lg">
       <Typography variant="h6" align="center" gutterBottom>
-        Book's Shop
+        epibooks
       </Typography>
       <Typography
         variant="subtitle1"
@@ -19,7 +19,7 @@ function MyFooter() {
         <Typography variant="body2" color="textSecondary" align="center">
           {"Copyright © "}
           <Link color="inherit" href="#">
-            Book's Shop
+            epibooks
           </Link>{" "}
           {new Date().getFullYear()}
           {"."}

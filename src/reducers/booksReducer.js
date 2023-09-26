@@ -13,8 +13,8 @@ const initialState = {
     romance: romance,
     scifi: scifi,
   },
-  setCategory: "history",
-  displayAllBooks: history,
+  setCategory: "history", // set the default value for the select menu
+  displayAllBooks: history, // set the default book to show equal to te selected category
   setSearch: "",
 };
 

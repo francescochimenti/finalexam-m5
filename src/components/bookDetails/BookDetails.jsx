@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 function BookDetails() {
   const { bookId } = useParams();
-  const { data } = useFetch(`https://epibooks.onrender.com/${bookId}`);
+  const { data } = useFetch(`https://epibooks.onrender.com/${bookId}`); // if the url change, useFetch will get the new data
 
   return (
     <>

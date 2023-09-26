@@ -4,11 +4,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from "@mui/material/CssBaseline";
 
 const ThemeWrapper = ({ children }) => {
-  const themeMode = useSelector((state) => state.theme);
+  const themeMode = useSelector((state) => state.theme); // Get theme
 
   const theme = createTheme({
     palette: {
-      mode: themeMode,
+      mode: themeMode, //set theme mode light or dark
     },
   });
 

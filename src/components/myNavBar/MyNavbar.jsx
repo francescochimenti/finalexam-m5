@@ -35,7 +35,7 @@ const MyNavbar = () => {
     dispatch(setCategory(event.target.value));
   };
 
-  const isHome = location.pathname === "/";
+  const isHome = location.pathname === "/"; //i need this for the book details page, if is not home i will show the back button
 
   return (
     <Box sx={{ flexGrow: 1 }} className="sticky-top">
@@ -99,8 +99,8 @@ const MyNavbar = () => {
                 </Grid>
               </>
             ) : (
-              <Button variant="outlined"> 
-                <Link to={"/"}>Back to the Homepage</Link>
+              <Button variant="contained" component={Link} to={"/"}> 
+               Back to the Homepage
               </Button>
             )}
           </Grid>

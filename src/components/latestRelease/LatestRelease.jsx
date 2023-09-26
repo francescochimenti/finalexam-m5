@@ -8,7 +8,7 @@ import { BarLoader } from "react-spinners";
 import { setId } from "../../reducers/idTaker";
 
 function LatestRelease() {
-  const books = useSelector((state) => state.books.displayAllBooks.slice(0, 20));
+  const books = useSelector((state) => state.books.displayAllBooks.slice(0, 12));
   const [loading, setLoading] = useState(false);
 
   const currentId = useSelector((state) => state.idTaker.id);
@@ -32,7 +32,7 @@ function LatestRelease() {
     return (
       <>
         <Container>
-          <h1 className="display-1 text-center mt-4 fw-bold">Book's Shop</h1>
+          <h1 className="display-1 text-center mt-4 fw-bold">epibooks</h1>
           <Row className="h-100">
             <Col lg={8}>
               <Row>
@@ -42,7 +42,7 @@ function LatestRelease() {
                     md={6}
                     lg={4}
                     key={book.asin}
-                    className={`d-flex justify-content-center mt-4 ${
+                    className={`d-flex px-2 py-0 justify-content-center mt-4 ${
                       book.asin === currentId ? "selected-book" : ""
                     }`}
                     onClick={() => {
@@ -76,7 +76,7 @@ function LatestRelease() {
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
               <Row>
-              <BarLoader color="#36d7b7" />
+              <BarLoader color="#ff0000" />
               </Row>
             </Col>
           </Row>

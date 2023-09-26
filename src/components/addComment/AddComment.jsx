@@ -45,11 +45,11 @@ const AddComment = () => {
         console.log(response);
         
         if (response.status === 200) {
-          setComment("");
-          setRate("");
-          dispatch(setId(""));
+          setComment(""); //clear the comment
+          setRate(""); //clear the rate
+          dispatch(setId(""));// i need this for get again the get, after the post
           setTimeout(() => {
-            dispatch(setId(currentId));
+            dispatch(setId(currentId));// now i will get the post
           }, 100);
         }
         
@@ -70,7 +70,7 @@ const AddComment = () => {
       }}
     >
       <FormControl fullWidth variant="outlined" sx={{ marginBottom: "20px" }}>
-        <InputLabel>Voto</InputLabel>
+        <InputLabel>Rate</InputLabel>
         <Select
           onChange={(e) => setRate(e.target.value.toString())}
           value={rate}
@@ -85,7 +85,7 @@ const AddComment = () => {
       </FormControl>
       <TextField
         fullWidth
-        label="Commento"
+        label="Comment"
         variant="outlined"
         multiline
         onChange={(e) => setComment(e.target.value)}
@@ -95,13 +95,14 @@ const AddComment = () => {
       <Button variant="contained" color="primary"
         onClick={() => {
           if (rate && comment !== "") {
+            // if all the fields are filled, i can post the comment
         postComment()
       } else {
         alert("Inserisci un commento e un voto")
           }
         }}
       >
-        Aggiungi Commento
+        Add Comment
       </Button>
     </Box>
   );

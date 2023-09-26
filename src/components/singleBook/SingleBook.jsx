@@ -13,7 +13,7 @@ const SingleBook = ({ book }) => {
         <CardActionArea>
           <CardMedia
             component="img"
-            sx={{ height: 320 }}
+            sx={{ height: 320}}
             image={book.img}
             alt={book.title}
           />

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+//create a custom hook to fetch the comments of the selected book
+
 const useComment = () => {
     const currentID = useSelector(state => state.idTaker.id)
 
@@ -30,7 +32,6 @@ const useComment = () => {
 
     useEffect(() => {
         getData()
-        // eslint-disable-next-line 
     }, [URL, currentID]);
 
     return { data, isLoading, error }
