@@ -32,7 +32,7 @@ const useComment = () => {
 
     useEffect(() => {
         getData()
-    }, [URL, currentID]);
+    }, [URL, currentID]); //every time the url or the id changes, the useEffect will be triggered, so i get new comment when i click on a new book
 
     return { data, isLoading, error }
 }
