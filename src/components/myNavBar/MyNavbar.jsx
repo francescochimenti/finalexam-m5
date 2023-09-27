@@ -1,41 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory, setSearch } from "../../reducers/booksReducer";
 import { toggleTheme } from "../../reducers/themeReducer";
-import {
-  AppBar,
-  Box,
-  Button,
-  Toolbar,
-  IconButton,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  Grid,
-  TextField,
-} from "@mui/material";
-import {
-  Brightness4 as Brightness4Icon,
-  Brightness7 as Brightness7Icon,
-} from "@mui/icons-material";
+import {AppBar, Box, Button, Toolbar, IconButton, Typography, Select, MenuItem, FormControl, Grid, TextField,} from "@mui/material";
+import { Brightness4 as Brightness4Icon, Brightness7 as Brightness7Icon,} from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
 
 const MyNavbar = () => {
   const dispatch = useDispatch();
   const themeMode = useSelector((state) => state.theme);
-  const currentCategory = useSelector((state) => state.books.setCategory);
+  const currentCategory = useSelector((state) => state.books.setCategory); //i take the default book category defined with reducers
+
+
   const location = useLocation();
-
-  const setSearchInput = (event) => {
-    dispatch(setSearch(event.target.value));
-  };
-
-  const setCategoryNow = (event) => {
-    dispatch(setCategory(event.target.value));
-  };
-
   const isHome = location.pathname === "/"; //i need this for the book details page, if is not home i will show the back button
+
+  useEffect(() => {
+    if (!isHome) {
+      // when i click on a book and i go to the book details page, i want to reset the search and the category
+      dispatch(setSearch(""));
+    }
+  }
+    , [isHome, dispatch]);
 
   return (
     <Box sx={{ flexGrow: 1 }} className="sticky-top">
@@ -78,14 +64,14 @@ const MyNavbar = () => {
                     className="input"
                     fullWidth
                     placeholder="Search books"
-                    onChange={setSearchInput}
+                    onChange={(e) => dispatch(setSearch(e.target.value))}
                   />
                 </Grid>
                 <Grid item xs={6} sm={3} md={1}>
                   <FormControl fullWidth>
                     <Select
                       value={currentCategory}
-                      onChange={setCategoryNow}
+                      onChange={(e) => dispatch(setCategory(e.target.value))}
                       displayEmpty
                       className="box"
                     >
@@ -99,9 +85,7 @@ const MyNavbar = () => {
                 </Grid>
               </>
             ) : (
-              <Button variant="contained" component={Link} to={"/"}> 
-               Back to the Homepage
-              </Button>
+              <Button variant="contained" component={Link} to={"/"}>Back to the Homepage</Button>
             )}
           </Grid>
         </Toolbar>

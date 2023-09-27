@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Typography,
-  Card,
-  CardContent,
-  Avatar,
-  Button,
-  TextField,
-} from "@mui/material";
+import {Typography ,Card ,CardContent ,Avatar ,Button ,TextField} from "@mui/material";
 import BeatLoader from "react-spinners/BeatLoader";
 import useComment from "../../hooks/useComment";
 import DeleteComment from "../deleteComment/DeleteComment";
@@ -35,6 +28,7 @@ function SingleComment() {
     return () => clearTimeout(timer);
   }, [comments]);
 
+  //create a state for the comment data
   const [editComment, setEditComment] = useState({
     id: "",
     text: "",
@@ -42,7 +36,7 @@ function SingleComment() {
   });
 
   const updateComment = async () => {
-    if (!editComment.id) return;
+    if (!editComment.id) return; // just for be sure there's no error
     try {
       await axios.put(
         `https://striveschool-api.herokuapp.com/api/comments/${editComment.id}`,
@@ -57,6 +51,7 @@ function SingleComment() {
           },
         }
       );
+      //clear a state for the comment data, just for be sure
       setEditComment({ id: "", text: "", rate: "" });
       dispatch(setId(""));
 
@@ -84,6 +79,7 @@ function SingleComment() {
                   style={{ marginRight: "16px" }}
                 />
                 <div style={{ flexGrow: 1 }}>
+                  {/* With this i easy know when someone click on the edit button, then i show the edit comment section */}
                   {editComment.id === comment._id ? (
                     <>
                       <TextField
@@ -111,18 +107,22 @@ function SingleComment() {
                     </>
                   ) : (
                     <>
-                      <Typography variant="body1"><span className="fw-bold">Comment:</span> {comment.comment}</Typography>
+                      <Typography variant="body1">
+                        <span className="fw-bold">Comment:</span>{" "}
+                        {comment.comment}
+                      </Typography>
                       <Typography variant="body2">
                         <span className="fw-bold">Rate:</span> {comment.rate}
                       </Typography>
                       <DeleteComment id={comment._id} />
-                      <Button
-                          onClick={() =>
-                            setEditComment({
-                              id: comment._id,
-                              text: comment.comment,
-                              rate: comment.rate,
-                            })
+                      {/* i pass the data to the edit section, so it's easy take the data of the comment */}
+                        <Button
+                        onClick={() =>
+                          setEditComment({
+                            id: comment._id,
+                            text: comment.comment,
+                            rate: comment.rate,
+                          })
                         }
                       >
                         Edit

@@ -14,10 +14,6 @@ function LatestRelease() {
   const currentId = useSelector((state) => state.idTaker.id);
 
   const dispatch = useDispatch();
-
-  const myIdSet = (id) => {
-    dispatch(setId(id));
-  };
   
 
   useEffect(() => {
@@ -47,9 +43,9 @@ function LatestRelease() {
                     }`}
                     onClick={() => {
                       if (currentId === book.asin) {
-                        myIdSet(null);
+                        dispatch(setId(null));
                       } else {
-                        myIdSet(book.asin);
+                        dispatch(setId(book.asin));
                       }
                     }}
                   >
