@@ -1,94 +1,135 @@
-import { Typography, Card, CardContent, Avatar } from "@mui/material";
-import { nanoid } from "nanoid";
-import { useEffect, useState } from "react";
-import useComment from "../../hooks/useComment";
-import DeleteComment from "../deleteComment/DeleteComment"; // i pass the comment id to the delete button
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import {
+  Typography,
+  Card,
+  CardContent,
+  Avatar,
+  Button,
+  TextField,
+} from "@mui/material";
 import BeatLoader from "react-spinners/BeatLoader";
+import useComment from "../../hooks/useComment";
+import DeleteComment from "../deleteComment/DeleteComment";
+import axios from "axios";
+import { setId } from "../../reducers/idTaker";
+import { useDispatch, useSelector } from "react-redux";
 
 function SingleComment() {
+  const dispatch = useDispatch();
   const { data } = useComment();
   const [comments, setComments] = useState([]);
+
   const currentId = useSelector((state) => state.idTaker.id);
 
   useEffect(() => {
-    if (data) {
-      setComments(data);
-    } else {
-      setComments([]);
-    }
-  }, [data, currentId]);
+    setComments(data || []);
+  }, [data]);
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    if (comments.length > 0 || comments.length === 0) {
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
   }, [comments]);
 
-  if (loading) {
-    return (
-      <div className="d-flex justify-content-center p-4">
-        <BeatLoader color="#ff0000" size={30} />
-      </div>
-    );
-  }
+  const [editComment, setEditComment] = useState({
+    id: "",
+    text: "",
+    rate: "",
+  });
+
+  const updateComment = async () => {
+    if (!editComment.id) return;
+    try {
+      await axios.put(
+        `https://striveschool-api.herokuapp.com/api/comments/${editComment.id}`,
+        {
+          comment: editComment.text,
+          rate: editComment.rate,
+        },
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTExY2ZlN2IyYjJhZTAwMTRiMzQ3MDUiLCJpYXQiOjE2OTU2NjYxNTEsImV4cCI6MTY5Njg3NTc1MX0.y5zScLJr8heKFZpCzn0OB8IJWTE8spbQY-InnwUnM64",
+          },
+        }
+      );
+      setEditComment({ id: "", text: "", rate: "" });
+      dispatch(setId(""));
+
+      setTimeout(() => {
+        dispatch(setId(currentId));
+      }, 200);
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+  };
 
   return (
     <>
-      {comments.length === 0 ? (
-        <Typography variant="h5" sx={{ textAlign: "center" }}>
-          No comments available
-        </Typography>
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center mt-4">
+          <BeatLoader color="red" size={15} />
+        </div>
       ) : (
         comments.map((comment) => (
-          <Card
-            key={nanoid()}
-            variant="elevation"
-            style={{
-              marginBottom: "20px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              borderRadius: "10px",
-              overflow: "hidden",
-            }}
-          >
-            <div style={{ padding: "10px 20px" }}>
-              <Typography variant="h6" style={{ fontWeight: "bold" }}>
-                Rate: {comment.rate} / 5
-              </Typography>
-            </div>
+          <Card key={comment._id} style={{ margin: "20px 0" }}>
+            <CardContent>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Avatar
+                  src={`https://picsum.photos/200/200?random=${currentId}`}
+                  style={{ marginRight: "16px" }}
+                />
+                <div style={{ flexGrow: 1 }}>
+                  {editComment.id === comment._id ? (
+                    <>
+                      <TextField
+                        value={editComment.text}
+                        onChange={(e) =>
+                          setEditComment({
+                            ...editComment,
+                            text: e.target.value,
+                          })
+                        }
+                      />
+                      <TextField
+                        type="number"
+                        value={editComment.rate}
+                        onChange={(e) =>
+                          setEditComment({
+                            ...editComment,
+                            rate: e.target.value,
+                          })
+                        }
+                        inputProps={{ min: 1, max: 5 }}
+                      />
 
-            <CardContent
-              style={{ display: "flex", alignItems: "start", padding: "20px" }}
-            >
-              <Avatar
-                src={`https://i.pravatar.cc/150?img=${Math.floor(
-                  Math.random() * 50
-                )}
-              `}
-                style={{ width: "60px", height: "60px", marginRight: "20px" }}
-              />
-
-              <div style={{ flexGrow: 1 }}>
-                <Typography
-                  variant="subtitle1"
-                  color="textPrimary"
-                  style={{ marginBottom: "8px" }}
-                >
-                  Comment:
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  {comment.comment}
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  {comment.author}
-                </Typography>
-                <DeleteComment id={comment._id} />
+                      <Button onClick={updateComment}>Save</Button>
+                    </>
+                  ) : (
+                    <>
+                      <Typography variant="body1"><span className="fw-bold">Comment:</span> {comment.comment}</Typography>
+                      <Typography variant="body2">
+                        <span className="fw-bold">Rate:</span> {comment.rate}
+                      </Typography>
+                      <DeleteComment id={comment._id} />
+                      <Button
+                          onClick={() =>
+                            setEditComment({
+                              id: comment._id,
+                              text: comment.comment,
+                              rate: comment.rate,
+                            })
+                        }
+                      >
+                        Edit
+                      </Button>
+                    </>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>
