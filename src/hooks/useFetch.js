@@ -19,6 +19,7 @@ const useFetch = (url) => {
 
     useEffect(() => {
         getData()
+        // eslint-disable-next-line
     }, [url]); // everytime the url changes, the useEffect will be triggered and i get the new books, i use this on the book details page
 
     return { data, isLoading, error }

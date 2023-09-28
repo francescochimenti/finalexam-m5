@@ -5,6 +5,7 @@ import { toggleTheme } from "../../reducers/themeReducer";
 import {AppBar, Box, Button, Toolbar, IconButton, Typography, Select, MenuItem, FormControl, Grid, TextField,} from "@mui/material";
 import { Brightness4 as Brightness4Icon, Brightness7 as Brightness7Icon,} from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
+import { setId } from "../../reducers/idTaker";
 
 const MyNavbar = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const MyNavbar = () => {
     if (!isHome) {
       // when i click on a book and i go to the book details page, i want to reset the search and the category
       dispatch(setSearch(""));
+    }
+    if (isHome) {
+      // when i go back to the home page i want to reset the id so i didn't see the comment area anymore
+      dispatch(setId(""));
     }
   }
     , [isHome, dispatch]);
@@ -85,7 +90,9 @@ const MyNavbar = () => {
                 </Grid>
               </>
             ) : (
-              <Button variant="contained" component={Link} to={"/"}>Back to the Homepage</Button>
+              <Grid item xs={5} sm={3} md={2}>
+                  <Button variant="contained" component={Link} to={"/"}>Back to the Homepage</Button>
+              </Grid>
             )}
           </Grid>
         </Toolbar>
