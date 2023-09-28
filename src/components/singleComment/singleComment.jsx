@@ -63,6 +63,12 @@ function SingleComment() {
     }
   };
 
+  if (comments.length === 0) {
+    return (
+      <h3>No comments avaible</h3>
+    )
+  }
+
   return (
     <>
       {loading ? (
