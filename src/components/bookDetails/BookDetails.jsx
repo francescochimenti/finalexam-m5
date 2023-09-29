@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid, Typography, Rating, Paper } from "@mui/material";
 import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import CommentArea from "../commentArea/CommentArea"
+import { setId } from "../../reducers/idTaker";
+import { useDispatch } from "react-redux";
 
 function BookDetails() {
+  const dispatch = useDispatch();
   const { bookId } = useParams();
   const { data } = useFetch(`https://epibooks.onrender.com/${bookId}`); // if the url change, useFetch will get the new data
+
+  useEffect(() => {
+    //set the id of the book in the state so i can show the comment
+    dispatch(setId(bookId));
+  }
+    , [bookId, dispatch]);
 
   return (
     <>
